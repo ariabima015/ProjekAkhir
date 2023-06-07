@@ -13,7 +13,7 @@ public class Database {
             "Tulipa spp.", "Nymphaea spp."};
 
     String[] indonesia = {"Astilbe", "Bunga Lonceng", "Bunga Matahari", "Kembang Gendola",
-            "Kembang Gugur California", "Anyelir", "Bunga Daisy", "Koresopsis", "Bunga Narcissus",
+            "Kembang Gugur California", "Bunga Anyelir", "Bunga Daisy", "Koresopsis", "Bunga Narcissus",
             "Bunga Sungsang atau Randa Tapak", "Bunga Iris", "Bunga Magnolia", "Bunga Anggrek", "Bunga Mawar",
             "Bunga Matahari", "Bunga Tulip", "Teratai"};
 
@@ -91,7 +91,7 @@ public class Database {
             "Penyiraman:\nMagnolia membutuhkan penyiraman yang cukup untuk menjaga tanah tetap lembab, terutama pada musim panas yang kering. Pastikan untuk menghindari genangan air yang berlebihan. Setelah tanaman dewasa, mereka lebih tahan terhadap kekeringan.\n" +
                     "\nPemangkasan:\nPemangkasan Magnolia biasanya dilakukan setelah berbunga pada musim panas atau musim gugur. Potong tangkai bunga layu atau cabang yang rusak. Hindari pemangkasan yang berlebihan karena ini dapat mempengaruhi pertumbuhan bunga di musim berikutnya.\n" +
                     "\nPerlindungan Musim Dingin:\nBeberapa varietas Magnolia mungkin membutuhkan perlindungan ekstra selama musim dingin, terutama jika tumbuh di daerah dengan suhu yang sangat rendah. Anda dapat menggunakan lapisan mulsa atau kain penutup untuk melindungi akar dan batang dari suhu yang ekstrem.\"",
-            "\"Penyiraman:\nAnggrek membutuhkan penyiraman yang cukup tetapi tidak berlebihan. Biarkan media tanam agak kering sebelum menyiram kembali.\n" +
+            "Penyiraman:\nAnggrek membutuhkan penyiraman yang cukup tetapi tidak berlebihan. Biarkan media tanam agak kering sebelum menyiram kembali.\n" +
                     "Pemupukan:\nBerikan pupuk khusus anggrek dengan dosis yang disarankan pada interval yang tepat. Pupuk ini biasanya mengandung nutrisi yang diperlukan untuk pertumbuhan dan pembungaan yang baik.\n" +
                     "Pemangkasan:\nJika ada bagian tanaman yang rusak atau mati, potonglah dengan hati-hati untuk menjaga kebersihan dan kesehatan tanaman.",
             "Penyiraman:\nMawar membutuhkan penyiraman yang cukup untuk menjaga tanah tetap lembab. Siram secara merata dan hindari genangan air. Penting untuk menghindari penyiraman daun pada malam hari karena ini dapat menyebabkan perkembangan penyakit jamur.\n" +

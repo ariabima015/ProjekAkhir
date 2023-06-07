@@ -1,21 +1,25 @@
 package com.example.projekpa;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.example.projekpa.ml.Model;
 
@@ -23,17 +27,24 @@ import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
 
     Button camera, gallery;
     int imageSize = 256;
-    Bitmap imagePass;
+    Uri imagePass;
+    private Uri imageUri;
+
+    File imageFile;
 
 
     @Override
@@ -45,27 +56,47 @@ public class MainActivity extends AppCompatActivity {
         camera = findViewById(R.id.button);
         gallery = findViewById(R.id.button2);
 
-
-        camera.setOnClickListener(view -> {
-            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(takePictureIntent, 3);
-                }
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            camera.setOnClickListener(view -> {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                imageFile = createImageFile();
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    imageUri = FileProvider.getUriForFile(MainActivity.this, "com.example.projekpa.fileprovider", imageFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    startActivityForResult(takePictureIntent, 3);
+                    }
+            });
+        } else {
+            // Permission is not granted, request it
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 3);
+        }
+        gallery.setOnClickListener(view -> {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(galleryIntent, 1);
         });
-        gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent cameraIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(cameraIntent, 1);
-            }
-        });
+    }
+
+    private File createImageFile() {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+
+        // Get the directory to store the image file
+        File storageDir = MainActivity.this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        try {
+            return File.createTempFile(
+                    "IMG_${timeStamp}_",
+                    ".jpg",
+                    storageDir
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void classifyImage(Bitmap image){
         try {
             Model model = Model.newInstance(getApplicationContext());
-            Database Database = new Database();
 
             // Creates inputs for reference.
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 256, 256, 3}, DataType.FLOAT32);
@@ -102,14 +133,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            String[] classes = Database.nama;
 
             Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
 
-            Bitmap imageBitmap = imagePass;
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream.toByteArray();
+//            Bitmap imageBitmap = imagePass;
+//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+//            byte[] byteArray = byteArrayOutputStream.toByteArray();
 
             if(maxConfidence < 0.98){
                 showDialog();
@@ -119,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             }else {
                 intent.putExtra("pos", maxPos);
                 intent.putExtra("acc",maxConfidence);
-                intent.putExtra("img", byteArray);
+                intent.putExtra("img", imagePass.toString());
 
                 // Releases model resources if no longer used.
                 model.close();
@@ -135,8 +165,6 @@ public class MainActivity extends AppCompatActivity {
     void showDialog() {
         final Dialog dialog = new Dialog(MainActivity.this);
 
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.setCancelable(true);
         dialog.setContentView(R.layout.dialog_box);
         dialog.show();
 
@@ -146,32 +174,69 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public Bitmap getBitmapFromUri(Uri uri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+            return BitmapFactory.decodeStream(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(resultCode == RESULT_OK){
             if(requestCode == 3){
-                Bitmap image = (Bitmap) data.getExtras().get("data");
-                int dimension = Math.min(image.getWidth(), image.getHeight());
-                image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
-                imagePass = image;
-                imagePass = Bitmap.createScaledBitmap(imagePass, 300, 300, false);
-                image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
-
-                classifyImage(image);
+                Bitmap image = getBitmapFromUri(imageUri);
+                if (image != null) {
+                    int dimension = Math.min(image.getWidth(), image.getHeight());
+                    image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
+                    imagePass = imageUri;
+//                    imagePass = Bitmap.createScaledBitmap(imagePass, 300, 300, false);
+                    image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
+                    classifyImage(image);
+                }
             }else{
                 Uri dat = data.getData();
                 Bitmap image = null;
                 try {
                     image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), dat);
-                    imagePass = image;
-                    imagePass = Bitmap.createScaledBitmap(imagePass, 300, 300, false);
+                    imagePass = dat;
+//                    imagePass = Bitmap.createScaledBitmap(imagePass, 300, 300, false);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
+
                 image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
                 classifyImage(image);
             }
+
+//            if(requestCode == 3){
+//                Bitmap image = (Bitmap) data.getExtras().get("data");
+//                int dimension = Math.min(image.getWidth(), image.getHeight());
+//                imagePass = image;
+//                imagePass = Bitmap.createScaledBitmap(imagePass, 300, 300, false);
+//                image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
+//                image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
+//
+//                classifyImage(image);
+//            }else{
+//                Uri dat = data.getData();
+//                Bitmap image = null;
+//                try {
+//                    image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), dat);
+//                    imagePass = image;
+//                    imagePass = Bitmap.createScaledBitmap(imagePass, 300, 300, false);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
+//                classifyImage(image);
+//            }
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

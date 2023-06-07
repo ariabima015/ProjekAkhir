@@ -12,26 +12,27 @@
 
         <ImageView
             android:id="@+id/bunga_image"
-            android:layout_width="360dp"
-            android:layout_height="360dp"
+            android:layout_width="345dp"
+            android:layout_height="345dp"
             android:layout_marginTop="60dp"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/rounded_layer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/akurasi_result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ilmiah"
-            android:layout_centerHorizontal="true"
-            android:layout_marginHorizontal="24dp"
-            android:text=""
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bunga_image" />
+<!--        <TextView-->
+<!--            android:id="@+id/akurasi_result"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/ilmiah"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginHorizontal="24dp"-->
+<!--            android:text=""-->
+<!--            android:textSize="16sp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/bunga_image" />-->
 
         <TextView
             android:id="@+id/bunga"
@@ -45,7 +46,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/akurasi_result" />
+            app:layout_constraintTop_toBottomOf="@+id/bunga_image" />
 
         <TextView
             android:id="@+id/bunga_result"
@@ -64,7 +65,6 @@
             android:id="@+id/ilmiah"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView"
             android:layout_marginTop="20dp"
             android:layout_marginHorizontal="24dp"
             android:text="Nama Ilmiah"
@@ -91,7 +91,6 @@
             android:id="@+id/media_tanam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView"
             android:layout_marginTop="20dp"
             android:layout_marginHorizontal="24dp"
             android:text="Media Tanam"
@@ -118,7 +117,6 @@
             android:id="@+id/penempatan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView"
             android:layout_marginTop="20dp"
             android:layout_marginHorizontal="24dp"
             android:text="Peletakan Tanaman"
@@ -145,7 +143,6 @@
             android:id="@+id/perawatan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView"
             android:layout_marginTop="20dp"
             android:layout_marginHorizontal="24dp"
             android:text="Perawatan"
