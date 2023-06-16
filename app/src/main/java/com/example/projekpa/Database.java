@@ -6,16 +6,20 @@ public class Database {
             "California Poppy", "Carnation", "Common Daisy", "Coreopsis", "Daffodil",
             "Dandelion", "Iris", "Magnolia", "Orchid", "Rose", "Sunflower", "Tulip", "Water Lily"};
 
+    String[] namaB = {"Astilbe", "Bellflower", "Black Eyed Susan", "Calendula",
+            "California Poppy", "Carnation", "Common Daisy", "Coreopsis", "Daffodil",
+            "Dandelion", "Iris", "Magnolia", "Anggrek", "Mawar", "Bunga Matahari", "Tulip", "Teratai"};
+
     String[] ilmiah = {"Astilbe spp.", "Campanula spp.", "Rudbeckia hirta",
             "Calendula officinalis", "Eschscholzia californica", "Dianthus caryophyllus",
             "Bellis perennis", "Coreopsis spp.", "Narcissus spp.", "Taraxacum officinale",
             "Neomarica longifolia", "Magnolia spp.", "Orchidaceae", "Rosa spp.", "Helianthus annuus",
             "Tulipa spp.", "Nymphaea spp."};
 
-    String[] indonesia = {"Astilbe", "Bunga Lonceng", "Bunga Matahari", "Kembang Gendola",
-            "Kembang Gugur California", "Bunga Anyelir", "Bunga Daisy", "Koresopsis", "Bunga Narcissus",
+    String[] indonesia = {"Bunga Astilbe", "Bunga Lonceng", "Bunga Matahari", "Bunga Calendula",
+            "Bunga Poppy California", "Bunga Anyelir", "Bunga Daisy", "Bunga Koresopsis", "Bunga Narcissus",
             "Bunga Sungsang atau Randa Tapak", "Bunga Iris", "Bunga Magnolia", "Bunga Anggrek", "Bunga Mawar",
-            "Bunga Matahari", "Bunga Tulip", "Teratai"};
+            "Bunga Matahari", "Bunga Tulip", "Bunga Teratai"};
 
     String[] mediaTanam = {"Astilbe tumbuh subur di tanah yang lembab, kaya humus, dan memiliki drainase yang baik. Tanah yang asam hingga netral adalah yang paling cocok untuk Astilbe. Sebelum menanam, pastikan untuk memperkaya tanah dengan kompos atau pupuk organik untuk meningkatkan kualitas dan kesuburannya",
             "Bellflower tumbuh dengan baik di tanah yang subur, lembab, dan memiliki drainase yang baik. Tanah yang kaya humus dan memiliki pH netral hingga sedikit asam merupakan pilihan terbaik untuk Bellflower. Pastikan media tanam tidak tergenang air, tetapi tetap menjaga kelembaban yang seimbang. Bellflower tumbuh dengan baik di tanah yang subur dan memiliki drainase yang baik. Tanah yang kaya akan bahan organik, seperti humus atau kompos, akan membantu menyediakan nutrisi yang cukup bagi pertumbuhan bunga Bellflower. Pastikan juga bahwa tanah tidak tergenang air, karena kelebihan air dapat merusak akar tanaman.",
@@ -89,14 +93,12 @@ public class Database {
                     "\nPemangkasan:\nSetelah bunga Iris selesai mekar, potong tangkai bunga yang layu dekat dengan pangkal tanaman. Biarkan daun-daunnya tetap ada untuk menyimpan energi ke dalam rimpang untuk pertumbuhan berikutnya.\n" +
                     "\nPembagian:\nSetiap beberapa tahun, rimpang Iris dapat dibagi untuk mencegah kepadatan tanaman. Hal ini dapat dilakukan setelah tanaman mengalami dormansi di musim dingin.",
             "Penyiraman:\nMagnolia membutuhkan penyiraman yang cukup untuk menjaga tanah tetap lembab, terutama pada musim panas yang kering. Pastikan untuk menghindari genangan air yang berlebihan. Setelah tanaman dewasa, mereka lebih tahan terhadap kekeringan.\n" +
-                    "\nPemangkasan:\nPemangkasan Magnolia biasanya dilakukan setelah berbunga pada musim panas atau musim gugur. Potong tangkai bunga layu atau cabang yang rusak. Hindari pemangkasan yang berlebihan karena ini dapat mempengaruhi pertumbuhan bunga di musim berikutnya.\n" +
-                    "\nPerlindungan Musim Dingin:\nBeberapa varietas Magnolia mungkin membutuhkan perlindungan ekstra selama musim dingin, terutama jika tumbuh di daerah dengan suhu yang sangat rendah. Anda dapat menggunakan lapisan mulsa atau kain penutup untuk melindungi akar dan batang dari suhu yang ekstrem.\"",
+                    "\nPemangkasan:\nPemangkasan Magnolia biasanya dilakukan setelah berbunga pada musim panas atau musim gugur. Potong tangkai bunga layu atau cabang yang rusak. Hindari pemangkasan yang berlebihan karena ini dapat mempengaruhi pertumbuhan bunga di musim berikutnya.\n",
             "Penyiraman:\nAnggrek membutuhkan penyiraman yang cukup tetapi tidak berlebihan. Biarkan media tanam agak kering sebelum menyiram kembali.\n" +
-                    "Pemupukan:\nBerikan pupuk khusus anggrek dengan dosis yang disarankan pada interval yang tepat. Pupuk ini biasanya mengandung nutrisi yang diperlukan untuk pertumbuhan dan pembungaan yang baik.\n" +
-                    "Pemangkasan:\nJika ada bagian tanaman yang rusak atau mati, potonglah dengan hati-hati untuk menjaga kebersihan dan kesehatan tanaman.",
+                    "\nPemupukan:\nBerikan pupuk khusus anggrek dengan dosis yang disarankan pada interval yang tepat. Pupuk ini biasanya mengandung nutrisi yang diperlukan untuk pertumbuhan dan pembungaan yang baik.\n" +
+                    "\nPemangkasan:\nJika ada bagian tanaman yang rusak atau mati, potonglah dengan hati-hati untuk menjaga kebersihan dan kesehatan tanaman.",
             "Penyiraman:\nMawar membutuhkan penyiraman yang cukup untuk menjaga tanah tetap lembab. Siram secara merata dan hindari genangan air. Penting untuk menghindari penyiraman daun pada malam hari karena ini dapat menyebabkan perkembangan penyakit jamur.\n" +
-                    "\nPemangkasan:\nPemangkasan Mawar dilakukan pada akhir musim dingin atau awal musim semi sebelum pertumbuhan baru dimulai. Potong tangkai bunga yang layu atau rusak serta cabang yang saling bersilangan untuk mempromosikan pertumbuhan yang sehat.\n" +
-                    "\nPerlindungan Musim Dingin:\nBeberapa varietas Mawar membutuhkan perlindungan selama musim dingin, terutama di daerah dengan suhu yang sangat rendah. Gunakan lapisan mulsa di sekitar akar Mawar atau tutup tanaman dengan bahan penutup untuk melindunginya dari suhu beku.",
+                    "\nPemangkasan:\nPemangkasan Mawar dilakukan pada awal musim semi sebelum pertumbuhan baru dimulai. Potong tangkai bunga yang layu atau rusak serta cabang yang saling bersilangan untuk mempromosikan pertumbuhan yang sehat.\n",
             "Penyiraman:\nMatahari membutuhkan penyiraman yang cukup, terutama selama musim panas yang kering. Siram secara merata dan pastikan tanah tetap lembab, tetapi hindari genangan air. Setelah tanaman dewasa, mereka lebih toleran terhadap kekeringan.\n" +
                     "\nPenyangga:\nBunga Matahari yang tinggi membutuhkan penyangga untuk menjaga stabilitas mereka. Gunakan tali atau tongkat penyangga yang kuat dan pasang di sekitar tanaman saat mereka mulai tumbuh tinggi.\n" +
                     "\nPemangkasan:\nPemangkasan pada bunga Matahari biasanya dilakukan setelah berbunga. Potong tangkai bunga yang layu atau rusak untuk menjaga tampilan estetika tanaman.",

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,14 +39,23 @@ public class ResultActivity extends AppCompatActivity {
 
 
         Database Database = new Database();
+        String imageUriString;
 
         Intent intent = getIntent();
         int pos = intent.getIntExtra("pos",20);
 //        float acc = intent.getFloatExtra("acc",0);
-        String imageUriString = intent.getStringExtra("img");
+        String imageUriStringCam = intent.getStringExtra("img Camera");
+        String imageUriStringGal = intent.getStringExtra("img Gallery");
+
+        if(imageUriStringCam == null){
+            imageUriString = imageUriStringGal;
+        }else {
+            imageUriString = imageUriStringCam;
+        }
+
         Uri imageUri = Uri.parse(imageUriString);
 
-        String[] nama = Database.indonesia;
+        String[] nama = Database.namaB;
         String[] namaIlmiah = Database.ilmiah;
         String[] media = Database.mediaTanam;
         String[] tempat = Database.penempatan;
@@ -60,8 +70,22 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         int dimension = Math.min(originalBitmap.getWidth(), originalBitmap.getHeight());
-        Bitmap resizedBitmap = ThumbnailUtils.extractThumbnail(originalBitmap, dimension, dimension);
-//        Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 345, 345, true);
+        // Create a matrix and set the rotation angle
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+
+// Create the rotated bitmap
+        Bitmap rotatedBitmap;
+        Bitmap resizedBitmap;
+
+        if(imageUriStringCam == null){
+            resizedBitmap = ThumbnailUtils.extractThumbnail(originalBitmap, dimension, dimension);
+        }else {
+            rotatedBitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(), originalBitmap.getHeight(), matrix, true);
+            resizedBitmap = ThumbnailUtils.extractThumbnail(rotatedBitmap, dimension, dimension);
+        }
+
+
 
 //        akurasi.setText(akurat);
         image.setImageBitmap(resizedBitmap);

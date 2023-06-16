@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
@@ -26,7 +25,6 @@ import com.example.projekpa.ml.Model;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
     Button camera, gallery;
     int imageSize = 256;
-    Uri imagePass;
+    Uri imagePassCam;
+    Uri imagePassGal;
     private Uri imageUri;
-
     File imageFile;
 
 
@@ -97,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
     public void classifyImage(Bitmap image){
         try {
             Model model = Model.newInstance(getApplicationContext());
-
             // Creates inputs for reference.
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 256, 256, 3}, DataType.FLOAT32);
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
@@ -149,7 +146,16 @@ public class MainActivity extends AppCompatActivity {
             }else {
                 intent.putExtra("pos", maxPos);
                 intent.putExtra("acc",maxConfidence);
-                intent.putExtra("img", imagePass.toString());
+
+                if(imagePassGal == null){
+                    intent.putExtra("img Camera", imagePassCam.toString());
+                }else {
+                    intent.putExtra("img Gallery", imagePassGal.toString());
+                }
+
+                imagePassGal = null;
+                imagePassCam = null;
+
 
                 // Releases model resources if no longer used.
                 model.close();
@@ -186,14 +192,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+
         if(resultCode == RESULT_OK){
             if(requestCode == 3){
+                imagePassCam = imageUri;
                 Bitmap image = getBitmapFromUri(imageUri);
                 if (image != null) {
-                    int dimension = Math.min(image.getWidth(), image.getHeight());
-                    image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
-                    imagePass = imageUri;
-//                    imagePass = Bitmap.createScaledBitmap(imagePass, 300, 300, false);
+                    image = ThumbnailUtils.extractThumbnail(image, imageSize, imageSize);
                     image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
                     classifyImage(image);
                 }
@@ -202,13 +208,12 @@ public class MainActivity extends AppCompatActivity {
                 Bitmap image = null;
                 try {
                     image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), dat);
-                    imagePass = dat;
-//                    imagePass = Bitmap.createScaledBitmap(imagePass, 300, 300, false);
+                    imagePassGal = dat;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-
+                image = ThumbnailUtils.extractThumbnail(image, imageSize, imageSize);
                 image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
                 classifyImage(image);
             }
