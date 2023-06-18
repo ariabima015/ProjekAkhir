@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             }else {
-                
+
                 Bundle bundle = data.getExtras();
                 Bitmap image = bundle.getParcelable("data");
 
