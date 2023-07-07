@@ -55,12 +55,11 @@ public class ResultActivity extends AppCompatActivity {
 
         Uri imageUri = Uri.parse(imageUriString);
 
-        String[] nama = Database.namaB;
+        String[] nama = Database.nama;
         String[] namaIlmiah = Database.ilmiah;
         String[] media = Database.mediaTanam;
         String[] tempat = Database.penempatan;
         String[] rawat = Database.perawatan;
-//        String akurat = String.valueOf(acc);
 
         Bitmap originalBitmap;
         try {
@@ -86,8 +85,6 @@ public class ResultActivity extends AppCompatActivity {
         }
 
 
-
-//        akurasi.setText(akurat);
         image.setImageBitmap(resizedBitmap);
         bunga.setText(nama[pos]);
         ilmiah.setText(namaIlmiah[pos]);

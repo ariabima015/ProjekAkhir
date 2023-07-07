@@ -23,19 +23,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/akurasi_result"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/ilmiah"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_marginHorizontal="24dp"-->
-<!--            android:text=""-->
-<!--            android:textSize="16sp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/bunga_image" />-->
-
         <TextView
             android:id="@+id/bunga"
             android:layout_width="match_parent"

@@ -13,7 +13,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Button;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -21,10 +20,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
-
 import com.example.projekpa.ml.Model;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
@@ -45,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     int imageSize = 256;
     Uri imagePassCam;
     Uri imagePassGal;
-    private Uri imageUri;
     File imageFile;
     Uri datUri;
 
@@ -66,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 imageFile = createImageFile();
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    imageUri = FileProvider.getUriForFile(MainActivity.this, "com.example.projekpa.fileprovider", imageFile);
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    datUri = FileProvider.getUriForFile(MainActivity.this, "com.example.projekpa.fileprovider", imageFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, datUri);
                     startActivityForResult(takePictureIntent, 1);
                     }
             });
@@ -78,17 +73,11 @@ public class MainActivity extends AppCompatActivity {
         gallery.setOnClickListener(view -> {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(galleryIntent, 2);
-//            CropImage.activity()
-//                    .setGuidelines(CropImageView.Guidelines.ON)
-//                    .start(this);
         });
     }
 
 
     private File createImageFile() {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String imageFileName = "IMG_" + timeStamp + "_";
 
         // Get the directory to store the image file
         File storageDir = MainActivity.this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -144,10 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
             Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
 
-//            Bitmap imageBitmap = imagePass;
-//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-//            byte[] byteArray = byteArrayOutputStream.toByteArray();
 
             if(maxConfidence < 0.98){
                 showDialog();
@@ -218,8 +203,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(resultCode == RESULT_OK){
             if(requestCode == 1){
-                imagePassCam = imageUri;
-                Bitmap image = getBitmapFromUri(imageUri);
+                imagePassCam = datUri;
+                Bitmap image = getBitmapFromUri(datUri);
                 if (image != null) {
                     image = ThumbnailUtils.extractThumbnail(image, imageSize, imageSize);
                     image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
@@ -229,7 +214,6 @@ public class MainActivity extends AppCompatActivity {
                 datUri = data.getData();
                 cropImage();
 
-
             }else {
 
                 Bundle bundle = data.getExtras();
@@ -237,41 +221,10 @@ public class MainActivity extends AppCompatActivity {
 
                 imagePassGal = datUri;
 
-//                try {
-//                    image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), datUri);
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-
                 image = ThumbnailUtils.extractThumbnail(image, imageSize, imageSize);
                 image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
                 classifyImage(image);
             }
-
-//            if(requestCode == 3){
-//                Bitmap image = (Bitmap) data.getExtras().get("data");
-//                int dimension = Math.min(image.getWidth(), image.getHeight());
-//                imagePass = image;
-//                imagePass = Bitmap.createScaledBitmap(imagePass, 300, 300, false);
-//                image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
-//                image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
-//
-//                classifyImage(image);
-//            }else{
-//                Uri dat = data.getData();
-//                Bitmap image = null;
-//                try {
-//                    image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), dat);
-//                    imagePass = image;
-//                    imagePass = Bitmap.createScaledBitmap(imagePass, 300, 300, false);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
-//                classifyImage(image);
-//            }
 
         }
         super.onActivityResult(requestCode, resultCode, data);

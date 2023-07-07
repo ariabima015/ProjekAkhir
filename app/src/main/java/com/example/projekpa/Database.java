@@ -4,10 +4,6 @@ public class Database {
 
     String[] nama = {"Astilbe", "Bellflower", "Black Eyed Susan", "Calendula",
             "California Poppy", "Carnation", "Common Daisy", "Coreopsis", "Daffodil",
-            "Dandelion", "Iris", "Magnolia", "Orchid", "Rose", "Sunflower", "Tulip", "Water Lily"};
-
-    String[] namaB = {"Astilbe", "Bellflower", "Black Eyed Susan", "Calendula",
-            "California Poppy", "Carnation", "Common Daisy", "Coreopsis", "Daffodil",
             "Dandelion", "Iris", "Magnolia", "Anggrek", "Mawar", "Bunga Matahari", "Tulip", "Teratai"};
 
     String[] ilmiah = {"Astilbe spp.", "Campanula spp.", "Rudbeckia hirta",
@@ -16,10 +12,6 @@ public class Database {
             "Neomarica longifolia", "Magnolia spp.", "Orchidaceae", "Rosa spp.", "Helianthus annuus",
             "Tulipa spp.", "Nymphaea spp."};
 
-    String[] indonesia = {"Bunga Astilbe", "Bunga Lonceng", "Bunga Matahari", "Bunga Calendula",
-            "Bunga Poppy California", "Bunga Anyelir", "Bunga Daisy", "Bunga Koresopsis", "Bunga Narcissus",
-            "Bunga Sungsang atau Randa Tapak", "Bunga Iris", "Bunga Magnolia", "Bunga Anggrek", "Bunga Mawar",
-            "Bunga Matahari", "Bunga Tulip", "Bunga Teratai"};
 
     String[] mediaTanam = {"Astilbe tumbuh subur di tanah yang lembab, kaya humus, dan memiliki drainase yang baik. Tanah yang asam hingga netral adalah yang paling cocok untuk Astilbe. Sebelum menanam, pastikan untuk memperkaya tanah dengan kompos atau pupuk organik untuk meningkatkan kualitas dan kesuburannya",
             "Bellflower tumbuh dengan baik di tanah yang subur, lembab, dan memiliki drainase yang baik. Tanah yang kaya humus dan memiliki pH netral hingga sedikit asam merupakan pilihan terbaik untuk Bellflower. Pastikan media tanam tidak tergenang air, tetapi tetap menjaga kelembaban yang seimbang. Bellflower tumbuh dengan baik di tanah yang subur dan memiliki drainase yang baik. Tanah yang kaya akan bahan organik, seperti humus atau kompos, akan membantu menyediakan nutrisi yang cukup bagi pertumbuhan bunga Bellflower. Pastikan juga bahwa tanah tidak tergenang air, karena kelebihan air dapat merusak akar tanaman.",
